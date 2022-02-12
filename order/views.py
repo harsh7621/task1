@@ -41,8 +41,8 @@ def edit_data(request,id):
         return redirect('/home')
     else:
         order_edit = Order.objects.filter(id=id)
-        
-        return render(request, 'order.html', {'order_edit':order_edit})
+        order_editt=order_edit.values("id","customer__id","customer__first_name","product__id","product__product_name","Unit_price","qty","total_price")
+        return render(request, 'order.html', {'order_edit':order_editt})
 
 def dataa(request):
     if request.method == "POST":
