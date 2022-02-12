@@ -14,8 +14,41 @@
   </head>
   
 <body>
+  {% if order_edit %}
   <center>
-    <form action="/data_store" method="POST" enctype="multipart/form-data">
+    {% for x in order_edit %}
+<form action="/edit_data/{{x.id}}" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  
+  <b>Customer:</b> <select style="margin-left:15px;" name="customer"  size="1">
+    
+    <option  value="{{x.customer.id}}" >{{x.customer.first_name}}</option>
+    
+  </select><br><br>
+    
+  <b>Product:</b> <select style="margin-left:15px;" name="product"  size="1">
+    
+    <option  value="{{x.product.id}}" >{{x.product.product_name}}</option>
+    
+  </select><br><br>
+
+  <b>Price:</b><br>
+  <input type="text" name="price" value="{{x.Unit_price}}" id="price" readonly><br><br>
+  <b>Qty</b><br>
+  <input type="number" name="qty" value="{{x.qty}}" id="qty" onblur="myFunction()"><br><br>
+  <b>Total Price:</b><br>
+  <input type="text" name="total" value="{{x.total_price}}" id="total_price" readonly><br><br>
+  <input type="submit" name="submit" value="Update">
+  
+</form>
+{% endfor %}
+<a href="/home">List Of Data</a>
+</center>
+
+
+{% else %}
+  <center>
+    <form action="/add_data" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
     
       <b>Customer:</b> <select style="margin-left:15px;" name="customer"  size="1">
@@ -45,6 +78,7 @@
     <a href="/home">List Of Data</a>
   </center>
 
+ {% endif %}
   <script>
     function myFunction(){
       default_qty = $('#qty').val();

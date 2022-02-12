@@ -26,13 +26,12 @@
 		</tr>
 		{% for x in data_fetch %}
 		<tr>
-			<td>{{x.customer_id.first_name}}</td>
-			<td>{{x.product_id.product_name}}</td>
+			<td>{{x.customer.first_name}}</td>
+			<td>{{x.product.product_name}}</td>
 			<td>{{x.Unit_price}}</td>
 			<td>{{x.qty}}</td>
 			<td>{{x.total_price}}</td>
-			<td><a href="/edit/{{x.id}}">Edit</a>
-				<!-- <a href="/delete/{{x.id}}">delete</a>  -->
+			<td><a href="/edit_data/{{x.id}}">Edit</a>
 				<a href="/delete/{{x.id}}" onclick="return confirm('Are you sure you want to delete this?')">delete</a></td>
 				</tr>
 				{% endfor %}
