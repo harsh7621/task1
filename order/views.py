@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from order.models import Order
 from customer.models import Customer
 from product.models import Product
+from django.http import JsonResponse
 # Create your views here.
 
 def list_order(request):
@@ -45,3 +46,11 @@ def data_update(request,id):
         order_store_dataa = Order(id=id,customer_id=Customer(customer_name),product_id=Product(product_name),Unit_price=price,qty=qty,total_price=total_price)
         order_store_dataa.save()
         return redirect('/home')
+
+def dataa(request):
+    if request.method == "POST":
+        id=request.POST.get('product')
+        print(id)
+        pi=Product.objects.get(id=id)
+        product_price=(pi.unit_price)
+        return JsonResponse({'product_price':product_price})

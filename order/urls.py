@@ -8,6 +8,8 @@ urlpatterns = [
 	path('add_data',views.add_data,name="add_data"),
 	path('data_store',views.data_store,name="data_store"),
 	path('edit/<int:id>',views.edit_data,name="edit"),
-	path('data_update/<int:id>',views.data_update,name="data_update")
+	path('data_update/<int:id>',views.data_update,name="data_update"),
+	path('dataa',views.dataa,name="dataa")
+
   
 ]

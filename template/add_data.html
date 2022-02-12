@@ -1,10 +1,16 @@
 <html>
   <title>Add Data</title>
   <head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </head>
   
 <body>
@@ -18,20 +24,20 @@
       {% endfor %}
       </select><br><br>
     
-      <b>Product:</b> <select style="margin-left:15px;" name="product"  size="1">
+      <b>Product:</b> <select style="margin-left:15px;" id="product" onblur="myyFunction()" name="product"  size="1">
       {% for x in product_data %}
-      <option  value="{{x.id}}">{{x.product_name}}</option>
+      <option  value="{{x.id}}" id="product" >{{x.product_name}}</option>
       {% endfor %}
       </select><br><br>
 
       <b>Price:</b><br>
-      <input type="text" id="price" name="price"><br><br>
+      <input type="text" id="price" name="price" readonly><br><br>
 
       <b>Qty</b><br>
       <input type="number" name="qty" value="1" id="qty" onblur="myFunction()" class="qty" required  min="1" max="100"><br><br>
 
       <b>Total Price:</b><br>
-      <input id="total_price" name="total" type="text" class="total" ><br><br>
+      <input id="total_price" name="total" type="text" class="total" readonly ><br><br>
 
       <input type="submit" name="submit" value="submit"><br><br>
     
@@ -47,6 +53,25 @@
       // console.log(final_amount)
       $("#total_price").val(final_amount);
     }
+    function myyFunction(){
+      product = $('#product').val();
+      var csrf = $("input[name=csrfmiddlewaretoken]").val();
+      console.log(product)
+      mydata = {product:product,csrfmiddlewaretoken:csrf}
+      $.ajax({
+        url:"{% url 'dataa' %}",
+        method:"POST",
+        data:mydata,
+        success:function(data){
+              // console.log(data);
+              $("#price").val(data.product_price);
+        }
+
+      });
+    };
+    
+      
+    
   </script>
 </body>
 </html>
