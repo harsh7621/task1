@@ -6,7 +6,7 @@ from django.http import JsonResponse
 # Create your views here.
 
 def list_order(request):
-    data_fetch = Order.objects.all()
+    data_fetch = Order.objects.values("id","customer__first_name","product__product_name","Unit_price","qty","total_price")
     return render(request,'list_order.html', {'data_fetch':data_fetch})
 
 def delete_order(request, id):
@@ -25,8 +25,8 @@ def add_data(request):
         order_store_data.save()
         return redirect('/home')
     else:
-        customer_data = Customer.objects.all()
-        product_data = Product.objects.all()
+        customer_data = Customer.objects.values("id","first_name")
+        product_data = Product.objects.values("id","product_name")
         return render(request,'order.html',{'customer_data':customer_data,'product_data':product_data})
 
 def edit_data(request,id):
@@ -41,9 +41,8 @@ def edit_data(request,id):
         return redirect('/home')
     else:
         order_edit = Order.objects.filter(id=id)
-        customer_edit = Customer.objects.filter(id=id)
-        product_edit = Product.objects.filter(id=id)
-        return render(request, 'order.html', {'order_edit':order_edit,'customer_edit':customer_edit,'product_edit':product_edit})
+        
+        return render(request, 'order.html', {'order_edit':order_edit})
 
 def dataa(request):
     if request.method == "POST":

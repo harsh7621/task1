@@ -24,10 +24,11 @@
 			<th>Total Price</th>
 			<th>Action</th>
 		</tr>
+		
 		{% for x in data_fetch %}
 		<tr>
-			<td>{{x.customer.first_name}}</td>
-			<td>{{x.product.product_name}}</td>
+			<td>{{x.customer__first_name}}</td>
+			<td>{{x.product__product_name}}</td>
 			<td>{{x.Unit_price}}</td>
 			<td>{{x.qty}}</td>
 			<td>{{x.total_price}}</td>
