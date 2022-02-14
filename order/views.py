@@ -16,30 +16,25 @@ def delete_order(request, id):
 
 def add_data(request):
     if request.method == 'POST':
-        customer_name = request.POST['customer']
-        product_name = request.POST['product']
+        form_id = request.POST['formid']
+        customer_id = request.POST['customer']
+        product_id = request.POST['product']
         price = request.POST['price']
         qty = request.POST['qty']
         total_price = request.POST['total']
-        order_store_data = Order(customer=Customer(customer_name),product=Product(product_name),Unit_price=price,qty=qty,total_price=total_price)
+        if(form_id==""):
+            order_store_data = Order(customer_id=customer_id,product_id=product_id,Unit_price=price,qty=qty,total_price=total_price)
+        else:
+            order_store_data = Order(id=form_id,customer_id=customer_id,product_id=product_id,Unit_price=price,qty=qty,total_price=total_price)
         order_store_data.save()
         return redirect('/home')
     else:
+        
         customer_data = Customer.objects.values("id","first_name")
         product_data = Product.objects.values("id","product_name")
         return render(request,'order.html',{'customer_data':customer_data,'product_data':product_data})
 
-def edit_data(request,id):
-    if request.method == 'POST':
-        customer_name = request.POST['customer']
-        product_name = request.POST['product']
-        price = request.POST['price']
-        qty = request.POST['qty']
-        total_price = request.POST['total']
-        order_store_dataa = Order(id=id,customer=Customer(customer_name),product=Product(product_name),Unit_price=price,qty=qty,total_price=total_price)
-        order_store_dataa.save()
-        return redirect('/home')
-    else:
+def edit_data(request,id):    
         order_edit = Order.objects.filter(id=id)
         order_editt=order_edit.values("id","customer__id","customer__first_name","product__id","product__product_name","Unit_price","qty","total_price")
         return render(request, 'order.html', {'order_edit':order_editt})

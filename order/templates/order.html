@@ -15,11 +15,11 @@
   
 <body>
   {% if order_edit %}
-  <center>
+
     {% for x in order_edit %}
-<form action="/edit_data/{{x.id}}" method="POST" enctype="multipart/form-data">
+<form action="/add_data" style="text-align: center;" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
-  
+  <input type="hidden" name="formid" id="formid" value="{{x.id}}"><br>
   <b>Customer:</b> <select style="margin-left:15px;" name="customer"  size="1">
     
     <option  value="{{x.customer__id}}" >{{x.customer__first_name}}</option>
@@ -43,14 +43,14 @@
 </form>
 {% endfor %}
 <a href="/home">List Of Data</a>
-</center>
+
 
 
 {% else %}
-  <center>
-    <form action="/add_data" method="POST" enctype="multipart/form-data">
+  
+    <form action="/add_data" style="text-align: center;" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
-    
+      <input type="hidden" name="formid" id="formid"><br>
       <b>Customer:</b> <select style="margin-left:15px;" name="customer"  size="1">
       {% for x in customer_data %}
       <option  value="{{x.id}}">{{x.first_name}}</option>
@@ -64,7 +64,7 @@
       </select><br><br>
 
       <b>Price:</b><br>
-      <input type="text" id="price" name="price" readonly><br><br>
+      <input type="text" id="price"  name="price" readonly><br><br>
 
       <b>Qty</b><br>
       <input type="number" name="qty" value="1" id="qty" onblur="myFunction()" class="qty" required  min="1" max="100"><br><br>
@@ -76,7 +76,7 @@
     
     </form>
     <a href="/home">List Of Data</a>
-  </center>
+  
 
  {% endif %}
   <script>
