@@ -12,7 +12,7 @@ def order(request):
 def order_delete(request,id):
     order_delete = Order.objects.filter(id=id)
     order_delete.delete()
-    return redirect ('/home')
+    return redirect ('/')
 
 def order_add(request,id=None):
     if request.method == 'POST':
@@ -22,12 +22,12 @@ def order_add(request,id=None):
         price = request.POST['price']
         qty = request.POST['qty']
         total_price = request.POST['total']
-        if(id==""):
+        if(id==None):
             order_store_data = Order(customer_id=customer_id,product_id=product_id,Unit_price=price,qty=qty,total_price=total_price)
         else:
             order_store_data = Order(id=id,customer_id=customer_id,product_id=product_id,Unit_price=price,qty=qty,total_price=total_price)
         order_store_data.save()
-        return redirect('/home')
+        return redirect('/')
     else:
         if(id==None):
             customer_data = Customer.objects.values("id","first_name")

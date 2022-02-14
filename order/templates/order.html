@@ -14,11 +14,11 @@
   </head>
 
   
-<body>
+<body style="text-align: center;">
   {% if order_edit %}
     <!-- Edit Form -->
       {% for x in order_edit %}
-  <form action="/edit_data/{{x.id}}" style="text-align: center;" method="POST" enctype="multipart/form-data">
+  <form action="/edit_data/{{x.id}}"  method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <!-- <input type="hidden" name="formid" id="formid" value="{{x.id}}"><br> -->
     <b>Customer:</b> <select style="margin-left:15px;" name="customer"  size="1">
@@ -47,7 +47,7 @@
 
 {% else %}
     <!-- Add Form -->
-    <form action="/add_data" style="text-align: center;" method="POST" enctype="multipart/form-data">
+    <form action="/add_data"  method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       <!-- <input type="hidden" name="formid" id="formid"><br> -->
       <b>Customer:</b> <select style="margin-left:15px;" name="customer"  size="1">
@@ -76,8 +76,8 @@
     </form>
  {% endif %}
  
- <a href="/home">List Of Data</a>
- <p>{{product_name}}</p>
+ <div><a href="/" class="btn btn-success">Show Data</a></div>
+ 
   <script>
     function myFunction(){
       default_qty = $('#qty').val();
