@@ -3,12 +3,12 @@ from django.urls import path
 from order import views
 
 urlpatterns = [
-	path('home',views.list_order,name="home"),
-	path('delete/<int:id>',views.delete_order,name="delete"),
-	path('add_data',views.add_data,name="add_data"),
+	path('home',views.order,name="home"),
+	path('delete/<int:id>',views.order_delete,name="delete"),
+	path('add_data',views.order_add,name="add_data"),
 	# path('add_data/<int:id>',views.add_data,name="add_data"),
-	path('edit_data/<int:id>',views.edit_data,name="edit_data"),
-	path('dataa',views.dataa,name="dataa")
+	path('edit_data/<int:id>',views.order_add,name="edit_data"),
+	path('price_data',views.price_data,name="price_data")
 
   
 ]

@@ -12,37 +12,36 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </head>
+
   
 <body>
   {% if order_edit %}
+    
+      {% for x in order_edit %}
+  <form action="/edit_data/{{x.id}}" style="text-align: center;" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- <input type="hidden" name="formid" id="formid" value="{{x.id}}"><br> -->
+    <b>Customer:</b> <select style="margin-left:15px;" name="customer"  size="1">
+      <option  value="{{x.customer__id}}" >{{x.customer__first_name}}</option>
+    </select><br><br>
+      
+    <b>Product:</b> <select style="margin-left:15px;" name="product"  size="1">
+      
+      <option  value="{{x.product__id}}" >{{x.product__product_name}}</option>
+      
+    </select><br><br>
 
-    {% for x in order_edit %}
-<form action="/add_data" style="text-align: center;" method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  <input type="hidden" name="formid" id="formid" value="{{x.id}}"><br>
-  <b>Customer:</b> <select style="margin-left:15px;" name="customer"  size="1">
+    <b>Price:</b><br>
+    <input type="text" name="price" value="{{x.Unit_price}}" id="price" readonly><br><br>
+    <b>Qty</b><br>
+    <input type="number" name="qty" value="{{x.qty}}" id="qty" onblur="myFunction()"><br><br>
+    <b>Total Price:</b><br>
+    <input type="text" name="total" value="{{x.total_price}}" id="total_price" readonly><br><br>
+    <input type="submit" name="submit" value="Update">
     
-    <option  value="{{x.customer__id}}" >{{x.customer__first_name}}</option>
-    
-  </select><br><br>
-    
-  <b>Product:</b> <select style="margin-left:15px;" name="product"  size="1">
-    
-    <option  value="{{x.product__id}}" >{{x.product__product_name}}</option>
-    
-  </select><br><br>
+  </form>
+    {% endfor %}
 
-  <b>Price:</b><br>
-  <input type="text" name="price" value="{{x.Unit_price}}" id="price" readonly><br><br>
-  <b>Qty</b><br>
-  <input type="number" name="qty" value="{{x.qty}}" id="qty" onblur="myFunction()"><br><br>
-  <b>Total Price:</b><br>
-  <input type="text" name="total" value="{{x.total_price}}" id="total_price" readonly><br><br>
-  <input type="submit" name="submit" value="Update">
-  
-</form>
-{% endfor %}
-<a href="/home">List Of Data</a>
 
 
 
@@ -50,7 +49,7 @@
   
     <form action="/add_data" style="text-align: center;" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
-      <input type="hidden" name="formid" id="formid"><br>
+      <!-- <input type="hidden" name="formid" id="formid"><br> -->
       <b>Customer:</b> <select style="margin-left:15px;" name="customer"  size="1">
       {% for x in customer_data %}
       <option  value="{{x.id}}">{{x.first_name}}</option>
@@ -75,10 +74,10 @@
       <input type="submit" name="submit" value="submit"><br><br>
     
     </form>
-    <a href="/home">List Of Data</a>
-  
-
  {% endif %}
+ 
+ <a href="/home">List Of Data</a>
+ <p>{{product_name}}</p>
   <script>
     function myFunction(){
       default_qty = $('#qty').val();
@@ -93,7 +92,7 @@
       console.log(product)
       mydata = {product:product,csrfmiddlewaretoken:csrf}
       $.ajax({
-        url:"{% url 'dataa' %}",
+        url:"{% url 'price_data' %}",
         method:"POST",
         data:mydata,
         success:function(data){

@@ -5,44 +5,43 @@ from product.models import Product
 from django.http import JsonResponse
 # Create your views here.
 
-def list_order(request):
+def order(request):
     data_fetch = Order.objects.values("id","customer__first_name","product__product_name","Unit_price","qty","total_price")
     return render(request,'list_order.html', {'data_fetch':data_fetch})
 
-def delete_order(request, id):
+def order_delete(request,id):
     order_delete = Order.objects.filter(id=id)
     order_delete.delete()
     return redirect ('/home')
 
-def add_data(request):
+def order_add(request,id=None):
     if request.method == 'POST':
-        form_id = request.POST['formid']
+        # form_id = request.POST['formid']
         customer_id = request.POST['customer']
         product_id = request.POST['product']
         price = request.POST['price']
         qty = request.POST['qty']
         total_price = request.POST['total']
-        if(form_id==""):
+        if(id==""):
             order_store_data = Order(customer_id=customer_id,product_id=product_id,Unit_price=price,qty=qty,total_price=total_price)
         else:
-            order_store_data = Order(id=form_id,customer_id=customer_id,product_id=product_id,Unit_price=price,qty=qty,total_price=total_price)
+            order_store_data = Order(id=id,customer_id=customer_id,product_id=product_id,Unit_price=price,qty=qty,total_price=total_price)
         order_store_data.save()
         return redirect('/home')
     else:
-        
-        customer_data = Customer.objects.values("id","first_name")
-        product_data = Product.objects.values("id","product_name")
-        return render(request,'order.html',{'customer_data':customer_data,'product_data':product_data})
+        if(id==None):
+            customer_data = Customer.objects.values("id","first_name")
+            product_data = Product.objects.values("id","product_name")
+            return render(request,'order.html',{'customer_data':customer_data,'product_data':product_data})
+        else:
+            order_edit = Order.objects.filter(id=id)
+            order_editt=order_edit.values("id","customer__id","customer__first_name","product__id","product__product_name","Unit_price","qty","total_price")
+            return render(request,'order.html',{'order_edit':order_editt})
 
-def edit_data(request,id):    
-        order_edit = Order.objects.filter(id=id)
-        order_editt=order_edit.values("id","customer__id","customer__first_name","product__id","product__product_name","Unit_price","qty","total_price")
-        return render(request, 'order.html', {'order_edit':order_editt})
-
-def dataa(request):
+def price_data(request):
     if request.method == "POST":
         id=request.POST.get('product')
-        print(id)
+        # print(id)
         pi=Product.objects.get(id=id)
         product_price=(pi.unit_price)
         return JsonResponse({'product_price':product_price})
