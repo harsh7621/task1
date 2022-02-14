@@ -16,7 +16,7 @@
   
 <body>
   {% if order_edit %}
-    
+    <!-- Edit Form -->
       {% for x in order_edit %}
   <form action="/edit_data/{{x.id}}" style="text-align: center;" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
@@ -46,7 +46,7 @@
 
 
 {% else %}
-  
+    <!-- Add Form -->
     <form action="/add_data" style="text-align: center;" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       <!-- <input type="hidden" name="formid" id="formid"><br> -->
