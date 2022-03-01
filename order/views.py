@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render,redirect
 from order.models import Order
 from customer.models import Customer
@@ -7,6 +8,9 @@ from django.http import JsonResponse
 
 def order(request):
     data_fetch = Order.objects.values("id","customer__first_name","product__product_name","Unit_price","qty","total_price")
+    paginator = Paginator(data_fetch, 5)
+    page_number = request.GET.get('page')
+    data_fetch = paginator.get_page(page_number)   
     return render(request,'list_order.html', {'data_fetch':data_fetch})
 
 def order_delete(request,id):

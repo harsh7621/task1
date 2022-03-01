@@ -15,28 +15,31 @@
 
   
 <body style="text-align: center;">
+  <div class="card card-primary card-outline">
+    <div class="card-body">
   {% if order_edit %}
+    
     <!-- Edit Form -->
       {% for x in order_edit %}
-  <form action="/edit_data/{{x.id}}"  method="POST" enctype="multipart/form-data">
+  <form action="/edit_data/{{x.id}}" style="margin-top: 150px;" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <!-- <input type="hidden" name="formid" id="formid" value="{{x.id}}"><br> -->
-    <b>Customer:</b> <select style="margin-left:15px;" name="customer"  size="1">
+    <b>Customer:</b> <select style="margin-left:5px;width:150px;" name="customer" >
       <option  value="{{x.customer__id}}" >{{x.customer__first_name}}</option>
     </select><br><br>
       
-    <b>Product:</b> <select style="margin-left:15px;" name="product"  size="1">
+    <b>Product:</b> <select style="margin-left:18px;width:150px;" name="product"  size="1">
       
       <option  value="{{x.product__id}}" >{{x.product__product_name}}</option>
       
     </select><br><br>
 
-    <b>Price:</b><br>
-    <input type="text" name="price" value="{{x.Unit_price}}" id="price" readonly><br><br>
-    <b>Qty</b><br>
-    <input type="number" name="qty" value="{{x.qty}}" id="qty" onblur="myFunction()"><br><br>
-    <b>Total Price:</b><br>
-    <input type="text" name="total" value="{{x.total_price}}" id="total_price" readonly><br><br>
+    <b>Price:</b>
+    <input type="text" name="price"style="margin-left:20px;width:150px;" value="{{x.Unit_price}}" id="price" readonly><br><br>
+    <b>Qty</b>
+    <input type="number" name="qty" style="margin-left:20px;width:150px;" value="{{x.qty}}" id="qty" onblur="myFunction()"><br><br>
+    <b>Total Price:</b>
+    <input type="text" name="total" style="width:120px;" value="{{x.total_price}}" id="total_price" readonly><br><br>
     <input type="submit" name="submit" value="Update">
     
   </form>
@@ -47,36 +50,39 @@
 
 {% else %}
     <!-- Add Form -->
-    <form action="/add_data"  method="POST" enctype="multipart/form-data">
+    
+    <form action="/add_data" style="margin-top: 150px;" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       <!-- <input type="hidden" name="formid" id="formid"><br> -->
-      <b>Customer:</b> <select style="margin-left:15px;" name="customer"  size="1">
+      <label><b>Customer:</b></label> <select style="margin-left:5px;width:150px;" name="customer"  size="1">
       {% for x in customer_data %}
-      <option  value="{{x.id}}">{{x.first_name}}</option>
+      <option  value="{{x.id}}" >{{x.first_name}}</option>
       {% endfor %}
       </select><br><br>
     
-      <b>Product:</b> <select style="margin-left:15px;" id="product" onblur="myyFunction()" name="product"  size="1">
+      <label><b>Product:</b></label> <select style="margin-left:18px;width:150px;" id="product" onblur="myyFunction()" name="product"  size="1">
       {% for x in product_data %}
       <option  value="{{x.id}}" id="product" >{{x.product_name}}</option>
       {% endfor %}
       </select><br><br>
 
-      <b>Price:</b><br>
-      <input type="text" id="price"  name="price" readonly><br><br>
+      <b>Price:</b>
+      <input type="text" style="margin-left:20px;width:150px;" id="price"  name="price" readonly><br><br>
 
-      <b>Qty</b><br>
-      <input type="number" name="qty" value="1" id="qty" onblur="myFunction()" class="qty" required  min="1" max="100"><br><br>
+      <label><b>Qty:</b></label>
+      <input type="number" style="margin-left:20px;width:150px;" name="qty" value="1" id="qty" onblur="myFunction()" class="qty" required  min="1" max="100"><br><br>
 
-      <b>Total Price:</b><br>
-      <input id="total_price" name="total" type="text" class="total" readonly ><br><br>
+      <label><b>Total Price:</b></label>
+      <input id="total_price" name="total" style="width:120px;" type="text" class="total" readonly ><br><br>
 
       <input type="submit" name="submit" value="submit"><br><br>
     
     </form>
  {% endif %}
  
- <div><a href="/" class="btn btn-success">Show Data</a></div>
+ <a href="/" class="btn btn-success">Show Data</a>
+ </div>
+ </div>
  
   <script>
     function myFunction(){

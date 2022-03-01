@@ -13,14 +13,14 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body style="background-color: black;">
 	<div style="text-align: center; padding-top:50px;"><a href="/add_data" class="btn btn-success">Add Order</a></div>
 	<div class="container-fluid" style="padding-top:50px;">
 		<div class="row">
 		  
 		  <div class="col-md-12">
 			<div class="card card-primary card-outline">
-			  <div class="card-body">
+			  <div class="card-body" >
 				<table class="table table-hover table-striped">
 					<tr>
 						<th>Customer</th>
@@ -45,6 +45,24 @@
 					</table><br><br>
 				</div>
 			</div>
+			<div class="container p-4" >
+				<div class="pagination justify-content-center">
+					<span class="step-links">
+					  {% if data_fetch.has_previous %}
+						  
+						  <a href="?page={{ data_fetch.previous_page_number }}" class="btn btn-success"> previous</a>&nbsp;
+					  {% endif %}
+		
+					 
+		
+					  {% if data_fetch.has_next %}
+						  <a href="?page={{ data_fetch.next_page_number }}" class="btn btn-success">next</a>
+						  
+					  {% endif %}
+					</span>
+					</div>
+				</div>
+
 		</div>
 	</div>
 	</div>
